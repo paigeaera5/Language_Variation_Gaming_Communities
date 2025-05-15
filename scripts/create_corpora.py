@@ -20,7 +20,7 @@ for file in files:
     print(name.lower().startswith(('league','minecraft','pokemon')),name)
     selected_df = df['body'].sample(count)
     print(file,len(df['body']))
-    '''selected_df.to_csv(os.path.join(output_dir,file),index=False,header=False,sep='\t')'''
+    selected_df.to_csv(os.path.join(output_dir,file),index=False,header=False,sep='\t')
 
 # Combine geographically-based subreddits to create English dialect corpora
 # Replace file names with the geographically-based data files
@@ -29,7 +29,7 @@ file_pairs = [(['Birmingham.csv', 'london.csv'], 'uk.csv'),
               (['California.csv', 'florida.csv'], 'us.csv'),
               (['melbourne.csv', 'sydney.csv'], 'au.csv')]
 
-'''for files, output_file in file_pairs:
+for files, output_file in file_pairs:
     first = os.path.join(output_dir,files[0])
     combined_df = pd.read_csv(first,sep='\t',header=None)
     print(len(combined_df))
@@ -41,4 +41,3 @@ file_pairs = [(['Birmingham.csv', 'london.csv'], 'uk.csv'),
         os.remove(file)
         combined_df = pd.concat([combined_df, next_df])
     combined_df.to_csv(os.path.join(output_dir, output_file),index=False,header=False,sep='\t')
-'''
