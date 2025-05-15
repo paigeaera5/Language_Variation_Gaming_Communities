@@ -23,7 +23,6 @@ if __name__ == "__main__":
         model = gensim.models.Word2Vec(min_count=min_count)
         model.build_vocab(tokens, trim_rule=trim_rule)
         limited_counts[file] = len(model.wv.index_to_key)
-        print(len((model.wv.index_to_key)),file)
 
         vocabs.append(set(model.wv.index_to_key))
 
