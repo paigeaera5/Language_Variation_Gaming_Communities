@@ -44,7 +44,6 @@ if __name__ == "__main__":
     output_dir = r".\preprocessed"
 
     for file in files:
-        print(file)
         df = pd.read_csv(os.path.join(root,file),sep='\t',names=['text'])
         df['text'] = df['text'].apply(preprocess)
         df.to_csv(os.path.join(output_dir,file),index=False,header=False)
