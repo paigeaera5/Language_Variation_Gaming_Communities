@@ -1,12 +1,9 @@
 import os
-import random
 import pickle
 import pandas as pd
-import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import figure
-from sklearn.metrics.pairwise import cosine_distances
 from scipy.spatial.distance import cosine
 
 def load_pkl(file):
@@ -17,7 +14,6 @@ def calculate_average_cosine_distance(word, embeddings_1, embeddings_2, vocab):
     word_distances = []
     embeddings_1, type1 = embeddings_1
     embeddings_2, type2 = embeddings_2
-    #print(type1,type2)
 
     if word in embeddings_1 and word in embeddings_2:
         # Get the embeddings from both corpora
@@ -73,7 +69,6 @@ if __name__ == "__main__":
         #with open(os.path.join(root,file), "rb") as f:
             embedding = load_pkl(os.path.join(root,file))
             if file.startswith(tuple(gaming)):
-                print(file)
                 gaming_embeddings.append((embedding,file.split('.')[0]))
             else:
                 geo_embeddings.append((embedding,file.split('.')[0]))
@@ -85,7 +80,6 @@ if __name__ == "__main__":
     for file in baselines:
         embedding = pd.read_csv(os.path.join('.','baseline',file))
         if file.startswith(tuple(gaming)):
-            print(file)
             gaming_base.append(embedding)
         else:
             geo_base.append(embedding)
