@@ -15,7 +15,7 @@ def average_pairwise_distance(embeddings):
     return np.mean(distances)
 
 # Compute instability score for a subreddit
-def compute_instability(models, shared_vocab, name):
+def compute_instability(models, name):
     embeddings = [model.wv[word] for model in models]
     avg_distance = average_pairwise_distance(embeddings)
     return [avg_distance, '_'.join(sorted([name,name]))]
@@ -30,7 +30,6 @@ save = os.path.join(".", "embeddings")
 basline_dir = os.path.join(".", "baseline")
 
 for file in os.listdir(root):
-    print(file)
     path = os.path.join(root, file)
     out = os.path.join(save, file) + '.bin'
 
@@ -57,23 +56,8 @@ for file in os.listdir(root):
     
     corpus_baseline = []
     for word in vocab_words:
-        corpus_baseline.append(compute_instability(models, vocab_words, file.split('.')[0].lower()))
+        corpus_baseline.append(compute_instability(models, file.split('.')[0].lower()))
     df = pd.DataFrame(corpus_baseline, columns = ["Distance", "Compared"])
     df.to_csv(os.path.join(basline_dir,file),index=False,header=True)
-    print(df)
     with open(os.path.join(basline_dir,file) + '.pkl',"wb") as f:
         pickle.dump(corpus_baseline, f)
-
-
-    #SGNS model
-    '''model = gensim.models.fasttext.Word2Vec()
-    model.build_vocab(corpus_file=path)
-    model.train(model="skipgram", corpus_file=path,epochs=model.epochs,total_words=model.corpus_total_words,
-                                                window = 4, min_count=2,min_n=0,max_n=0,negative=5,total_examples=model.corpus_count)
-    #Save bin format
-    model.save(out)
-
-#Convert SGNS from bin to vec format
-model = gensim.models.fasttext.load_facebook_vectors(os.path.join(root, "model_glowbe_cbow.bin"))
-model.save_word2vec_format(os.path.join(root, "model_glowbe_cbow.vec"))
-'''
